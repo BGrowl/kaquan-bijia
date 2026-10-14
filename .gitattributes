@@ -1,0 +1,13 @@
+# 全部按文本处理并统一 LF 行尾。
+# Windows 上如果让 git 把 .sh/.py 转成 CRLF，Linux runner 上 bash 会因 \r 报
+# "command not found"（本地 Git Bash 也一样），所以这里钉死 eol=lf。
+* text=auto eol=lf
+
+# 二进制文件不要做文本转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
