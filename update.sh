@@ -69,8 +69,19 @@ if [ -z "${SURGE_TOKEN:-}" ]; then
 fi
 
 cd "$PUB"
+# surge 的输出先落到日志文件，成功才截尾显示，失败则打全量。
+# 不能写成 `surge ... | tail -6` —— 管道后面再跟一条 echo，$? 就被 echo 覆盖了，
+# 发布失败也会返回 0，云端 workflow 会显示"绿色成功"，是最危险的一类假成功。
+LOGF="$ROOT/.publish.log"
 NODE_OPTIONS=--dns-result-order=ipv4first \
 SURGE_TOKEN="$SURGE_TOKEN" \
-"$NODE" "$SURGE" . kaquan-bijia.surge.sh 2>&1 | tail -6
+"$NODE" "$SURGE" . kaquan-bijia.surge.sh > "$LOGF" 2>&1
+pub_rc=$?
+if [ "$pub_rc" -ne 0 ]; then
+  echo "[$(ts)] 发布失败（退出码 $pub_rc），线上仍是上一版。surge 输出如下："
+  tail -40 "$LOGF"
+  exit "$pub_rc"
+fi
+tail -6 "$LOGF"
 
 echo "[$(ts)] 完成。数据时间：$(head -c 120 "$PUB/data/meta.json" | sed 's/.*"generated":"\([^"]*\)".*/\1/')"
