@@ -1,0 +1,21 @@
+# 卡券比价雷达 · Caddy 反代（最省事：自动申请并续期 HTTPS 证书）
+# 用法：
+#   1) 把下面域名换成你自己的，并把该域名的 A 记录解析到本机公网 IP
+#   2) 安装 caddy 后：caddy reload --config /etc/caddy/Caddyfile
+#      或直接  caddy run --config ./Caddyfile
+
+kaquan.example.com {
+	encode gzip
+
+	# 抓取的品类的分片数据不大，但首屏 meta.json 稍大，给足超时
+	reverse_proxy 127.0.0.1:18801 {
+		header_up Host {host}
+		transport http {
+			read_timeout 120s
+		}
+	}
+
+	# 静态资源可以放心长缓存；数据文件由后端带 no-cache 头，不在这里覆盖
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=86400"
+}

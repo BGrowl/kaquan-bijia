@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="卡券集市全站卡券比价：按品类、按商品规格横向对比各家卡商的实时报价，找出全网最低价。">
+<title>卡券集市 · 全站比价</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8590c'/%3E%3Cpath d='M18 21h28M18 32h28M18 43h18' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap hd">
+    <a class="logo" href="#/"><span class="dot">券</span>卡券集市 · 全站比价</a>
+    <nav class="tabs" id="tabs">
+      <a href="#/" data-v="home">品类速查</a>
+      <a href="#/m" data-v="merch">商家榜</a>
+      <a href="#/about" data-v="about">说明</a>
+    </nav>
+    <div class="sp"></div>
+    <div class="hdstat">
+      <span class="live" id="live" title="自动更新已开启"></span>
+      <span class="stamp" id="stamp"></span>
+      <button class="rf" id="rf" title="立即刷新数据" aria-label="立即刷新数据">⟳</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="app"><div class="ld">正在载入数据</div></main>
+
+<footer>
+  数据来自 kaquanjishi.com 的批量查价接口，由服务端定时自动重抓，仅供比价参考 · 下单前请以商家页面实际价格为准
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+name: 卡券比价站数据更新
+
+# 部署在 GitHub 的机器上跑，跟你的电脑开不开机完全无关。
+on:
+  schedule:
+    # 每 6 小时一轮。GitHub 的 cron 用的是 UTC（北京时间 = UTC+8）。
+    # 错开整点（用 :17）——整点是 Actions 最拥堵的时候，容易延迟甚至被丢弃。
+    - cron: '17 */6 * * *'
+  workflow_dispatch:          # 也支持在网页上手动点一下立刻跑
+
+# 同一时刻只允许一轮，避免两轮并发去抢源站的查询额度
+concurrency:
+  group: kaquan-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 商家商品接口的缓存（约 1500 个文件 / 12MB，TTL 24 小时）。
+      # 没有它，每轮都要重新拉全部「商家×品类」的商品列表，会慢几十分钟。
+      # key 带 run_id 是为了每轮都存一份新缓存，restore-keys 回退到最近一次。
+      - name: 恢复商品直链缓存
+        uses: actions/cache@v4
+        with:
+          path: site/pipeline/cache
+          key: kaquan-goods-${{ github.run_id }}
+          restore-keys: |
+            kaquan-goods-
+
+      - name: 安装 surge CLI
+        run: npm install -g surge
+
+      # 这台 runner 的 IP 在 Azure 机房段。源站是香港的 nginx，
+      # 正常应该能通；万一被拦，早点失败，别白跑一小时。
+      - name: 源站连通性预检
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://kaquanjishi.com/price-check)
+          echo "kaquanjishi.com/price-check -> HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::源站返回 HTTP $code，这台 runner 的 IP 可能被源站拦了，本轮中止。"
+            exit 1
+          fi
+
+      - name: 抓取 + 构建 + 发布
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        run: bash update.sh
+
+      # 发布完回头查一眼线上数据时间，确认真的更到了
+      - name: 发布结果自检
+        run: |
+          sleep 5
+          live=$(curl -s --max-time 30 "https://kaquan-bijia.surge.sh/data/meta.json?t=$(date +%s)" \
+                 | sed 's/.*"generated":"\([^"]*\)".*/\1/' | head -c 40)
+          echo "线上数据时间：$live"

@@ -1,0 +1,30 @@
+[Unit]
+Description=Kaquan Price Radar (卡券集市全站比价 · 自动刷新服务)
+Documentation=file:///opt/kaquan/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 把打包里的 app/ 目录放到这里
+WorkingDirectory=/opt/kaquan
+# 只监听本机，交给 Nginx/Caddy 反代；要直接暴露就改成 0.0.0.0
+Environment=HOST=127.0.0.1
+Environment=PORT=18801
+Environment=REFRESH_MINUTES=40
+Environment=STALE_MINUTES=20
+Environment=TZ=Asia/Shanghai
+ExecStart=/usr/bin/python3 /opt/kaquan/server.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+User=kaquan
+Group=kaquan
+
+# 轻量加固
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

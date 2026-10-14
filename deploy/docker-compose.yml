@@ -1,0 +1,30 @@
+# 卡券比价雷达 · 一键起服务（只监听本机，由 Caddy/Nginx 反代并签 HTTPS）
+#
+# 用法：
+#   cp .env.example .env      # 可选，改端口/刷新间隔
+#   docker compose up -d --build
+services:
+  kaquan:
+    build: .
+    image: kaquan-price-radar:latest
+    container_name: kaquan-price-radar
+    restart: unless-stopped
+    environment:
+      PORT: ${PORT:-8000}
+      REFRESH_MINUTES: ${REFRESH_MINUTES:-40}   # 自动重抓间隔（分钟）
+      STALE_MINUTES: ${STALE_MINUTES:-20}       # 数据超过该时长时，页面访问会补刷一次
+      TZ: ${TZ:-Asia/Shanghai}
+    ports:
+      # 只绑本机回环：公网访问一律走 Caddy/Nginx（HTTPS + 你的域名）
+      - "127.0.0.1:${HOST_PORT:-18801}:${PORT:-8000}"
+    volumes:
+      # 必须持久化：存放刷新状态与原始抓取数据（别删，否则丢失兜底数据）
+      - kaquan-cache:/app/cache
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  kaquan-cache:

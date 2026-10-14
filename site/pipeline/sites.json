@@ -1,0 +1,261 @@
+{
+ "114": {
+  "name": "阿兴权益",
+  "base": "https://ax.kkam.cn",
+  "search": null,
+  "verified": false,
+  "note": ""
+ },
+ "76": {
+  "name": "统一社区",
+  "base": "https://tysqu.com",
+  "search": "https://tysqu.com/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "165": {
+  "name": "初见权益",
+  "base": "https://cjqy.kkam.cn",
+  "search": "https://cjqy.kkam.cn/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "156": {
+  "name": "馨悦权益",
+  "base": "https://xy.kkam.cn",
+  "search": "https://xy.kkam.cn/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "24": {
+  "name": "卡券云权益",
+  "base": "https://vip.cccsup.com",
+  "search": "https://vip.cccsup.com/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "11": {
+  "name": "点卡城",
+  "base": "http://kaqw.kbb1.cn",
+  "search": "http://kaqw.kbb1.cn/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "40": {
+  "name": "HC技术",
+  "base": "https://dong.im01.cn",
+  "search": "https://dong.im01.cn/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "probe3"
+ },
+ "96": {
+  "name": "优享票易",
+  "base": "https://vip.egzs.cn",
+  "search": "https://vip.egzs.cn/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "37": {
+  "name": "晓晓会员",
+  "base": "https://hy.ziyuanting.com",
+  "search": "https://hy.ziyuanting.com/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "115": {
+  "name": "云采购权益",
+  "base": "https://m.yuncgo.com",
+  "search": "https://m.yuncgo.com/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "52": {
+  "name": "AR数卡",
+  "base": "http://api.an123.vip",
+  "search": "http://api.an123.vip/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "probe3"
+ },
+ "86": {
+  "name": "大鱼权益",
+  "base": "http://vip.dayu22.cn",
+  "search": "http://vip.dayu22.cn/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "155": {
+  "name": "大鱼权益餐饮代下单货源站",
+  "base": "https://vip.dayu22.cn",
+  "search": "https://vip.dayu22.cn/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "35": {
+  "name": "西柠檬权益",
+  "base": "https://qy.xilemon.com",
+  "search": null,
+  "verified": false,
+  "note": "ERR page.goto: net::ERR_CONNECTION_CLOSED at https://qy.xilemon."
+ },
+ "12": {
+  "name": "卓越权益",
+  "base": "https://www.zhuoyueqy.com",
+  "search": "https://www.zhuoyueqy.com/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "probe3"
+ },
+ "62": {
+  "name": "璨纵权益",
+  "base": "http://jinan2.top",
+  "search": "http://jinan2.top/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "probe3"
+ },
+ "41": {
+  "name": "亿创权益",
+  "base": "https://qy1.ycsat.cn",
+  "search": "https://qy1.ycsat.cn/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "49": {
+  "name": "智客权益 ",
+  "base": "https://api.zhikefa.com",
+  "search": "https://api.zhikefa.com/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "45": {
+  "name": "快发权益",
+  "base": "https://vip.kuaifaquanyi.com",
+  "search": "https://vip.kuaifaquanyi.com/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "probe3"
+ },
+ "13": {
+  "name": "云创权益",
+  "base": "https://vip.yckami.cn",
+  "search": "https://vip.yckami.cn/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "73": {
+  "name": "零点权益",
+  "base": "https://vip.lind0.cn",
+  "search": "https://vip.lind0.cn/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "77": {
+  "name": "小乐权益",
+  "base": "http://123.xiaoleyingshi.com",
+  "search": "http://123.xiaoleyingshi.com/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "26": {
+  "name": "数卡权益",
+  "base": "http://api.pvqq.cn",
+  "search": "https://api.pvqq.cn/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "16": {
+  "name": "惠捷权益",
+  "base": "https://huijiequanyi.com",
+  "search": null,
+  "verified": false,
+  "note": "guess-empty"
+ },
+ "81": {
+  "name": "咔乐权益",
+  "base": "https://www.kale666.cn",
+  "search": "https://www.kale666.cn/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "18": {
+  "name": "深度数卡",
+  "base": "https://deepcard.cc",
+  "search": "https://deepcard.cc/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "43": {
+  "name": "随心充",
+  "base": "https://www.suixin.vip",
+  "search": "https://www.suixin.vip/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "10": {
+  "name": "红尘网络",
+  "base": "https://kqw.ikunav.cn",
+  "search": null,
+  "verified": false,
+  "note": ""
+ },
+ "95": {
+  "name": "首票卡券",
+  "base": "https://z1.998sp.cn",
+  "search": null,
+  "verified": false,
+  "note": "guess-ok"
+ },
+ "25": {
+  "name": "数云权益",
+  "base": "https://vip.sybotong.com",
+  "search": "https://vip.sybotong.com/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "15": {
+  "name": "OK数卡",
+  "base": "http://v1.wozuiok.com",
+  "search": "http://v1.wozuiok.com/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "113": {
+  "name": "佰润权益",
+  "base": "https://shop.bairunqy.com",
+  "search": "https://shop.bairunqy.com/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "128": {
+  "name": "浩网SUP",
+  "base": "https://dyl.hao97.vip",
+  "search": "https://dyl.hao97.vip/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "29": {
+  "name": "ABC数卡",
+  "base": "https://abc.101s.cc",
+  "search": "https://abc.101s.cc/category?keyword={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "9": {
+  "name": "星芒芒权益",
+  "base": "https://xmang.cc",
+  "search": "https://xmang.cc/inside/goodsList?keyWord={kw}",
+  "verified": true,
+  "note": "form"
+ },
+ "34": {
+  "name": "简单网络",
+  "base": "https://kyx.qqluzuan.com",
+  "search": null,
+  "verified": false,
+  "note": ""
+ },
+ "19": {
+  "name": "聚合权益",
+  "base": "https://shop.jhmdl.cn",
+  "search": null,
+  "verified": false,
+  "note": "form"
+ }
+}

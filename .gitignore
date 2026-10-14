@@ -1,0 +1,42 @@
+# ---- 每轮重新生成的产物，不入库 ----
+/data/
+/public/
+/dist/
+/output/
+/data-backup-*/
+
+# ---- 抓取 / 商家接口缓存（走 CI 缓存或每轮重生成，不入库）----
+/site/pipeline/cache/
+/site/pipeline/work/
+/site/cache/
+__pycache__/
+*.pyc
+
+# ---- 密钥与私有配置：绝对不入库 ----
+/wrapper/
+.env.local
+*.token
+
+# ---- 本机探测 / 验证脚本与截图 ----
+/_probe/
+/shots/
+/shots-go/
+/shots-live/
+/shots-order/
+*.png
+verify-*.js
+shot*.js
+surge-auth.js
+
+# ---- 第一版遗留（已废弃，现用 site/pipeline/ 那一套）----
+/site/data/
+/analyze.py
+/build_web.py
+/fetch.py
+/norm.py
+/report.py
+/keywords.json
+
+# ---- 日志与临时文件 ----
+*.log
+/tmp-*.html
