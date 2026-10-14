@@ -17,6 +17,8 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 100
+    permissions:
+      contents: write     # 保活提交需要写权限
     steps:
       - uses: actions/checkout@v4
 
@@ -91,3 +93,24 @@ jobs:
           live=$(curl -s --max-time 30 "https://kaquan-bijia.surge.sh/data/meta.json?t=$(date +%s)" \
                  | sed 's/.*"generated":"\([^"]*\)".*/\1/' | head -c 40)
           echo "线上数据时间：$live"
+
+      # GitHub 规定：仓库连续 60 天没有「提交」就自动停用定时任务，
+      # 而且几乎不发通知 —— 最阴的一类静默失效。
+      # 本任务只把静态站发到 surge，自己从不产生提交，所以必须主动保活。
+      # 用「距上次提交是否超过 40 天」来判断，而不是判断"是不是 1 号"：
+      # cron 在 UTC 跑，北京时间 1 号的那一轮对应 UTC 的 31 号，按日期判断会错位。
+      - name: 保活提交（防 60 天无活动被停用）
+        if: github.event_name == 'schedule'
+        run: |
+          last=$(git log -1 --format=%ct)
+          now=$(date +%s)
+          days=$(( (now - last) / 86400 ))
+          echo "距上次提交 $days 天"
+          if [ "$days" -lt 40 ]; then
+            echo "还没到 40 天，跳过保活提交。"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "chore: 保活提交（防定时任务因 60 天无活动被停用）[skip ci]"
+          git push
