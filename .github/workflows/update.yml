@@ -19,6 +19,10 @@ jobs:
     timeout-minutes: 100
     permissions:
       contents: write     # 保活提交需要写权限
+    env:
+      # runner 默认是 UTC，会让日志里的时间戳（update.sh 的 ts()）比北京时间早 8 小时。
+      # 数据时间戳另有代码层保证（build_web.py 显式用 UTC+8），这里只管日志可读性。
+      TZ: Asia/Shanghai
     steps:
       - uses: actions/checkout@v4
 

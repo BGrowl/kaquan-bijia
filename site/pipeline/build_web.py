@@ -11,6 +11,17 @@ import json
 import os
 import sys
 import time
+from datetime import datetime, timedelta, timezone
+
+# 数据时间一律按北京时间（UTC+8）显示，不跟随系统时区。
+# 踩过的坑：原来用 time.strftime()，它取的是系统本地时区。本机 Windows 是北京
+# 时间没问题，但 GitHub Actions 的容器是 UTC —— 云端跑完，网站上会显示一个
+# 比北京时间早 8 小时的时间戳，看起来像"数据没更新 / 停在早上"，实际是刚抓的。
+BJ = timezone(timedelta(hours=8))
+
+
+def now_bj():
+    return datetime.now(BJ).strftime("%Y-%m-%d %H:%M")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -116,7 +127,7 @@ for g in GROUP_ORDER:
         groups.append({"name": g, "count": n})
 
 meta = {
-    "generated": time.strftime("%Y-%m-%d %H:%M"),
+    "generated": now_bj(),
     "source": "kaquanjishi.com",
     "siteBase": "https://kaquanjishi.com/site/",
     "stats": {
