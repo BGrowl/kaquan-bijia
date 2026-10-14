@@ -42,6 +42,32 @@ jobs:
       - name: 安装 surge CLI
         run: npm install -g surge
 
+      # 把「密钥错了」「源站被墙」这两类问题挡在抓取之前。
+      # 不这么做的话，要等 40 分钟抓完才在最后一步失败，白烧一个 runner 时段。
+      - name: 发布通道预检（surge 密钥）
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        run: |
+          set -u
+          if [ -z "${SURGE_TOKEN:-}" ]; then
+            echo "::error::没取到 SURGE_TOKEN。请到仓库 Settings -> Secrets and variables -> Actions，新增名为 SURGE_TOKEN 的 secret。"
+            exit 1
+          fi
+          echo "SURGE_TOKEN 已注入（长度 ${#SURGE_TOKEN}）"
+          # 关键坑：surge whoami 即便 token 是错的也照样返回退出码 0，
+          # 只能靠输出文本判断，看退出码会被骗。
+          out=$(surge whoami 2>&1 || true)
+          echo "$out"
+          if echo "$out" | grep -qi "not authenticated"; then
+            echo "::error::SURGE_TOKEN 无效（surge 报 Not Authenticated）。请核对 secret 的值。"
+            exit 1
+          fi
+          if ! echo "$out" | grep -qE '[[:alnum:]._%+-]+@[[:alnum:].-]+'; then
+            echo "::error::没能从 surge 输出里识别到账号，token 可能无效。"
+            exit 1
+          fi
+          echo "密钥有效，可以发布。"
+
       # 这台 runner 的 IP 在 Azure 机房段。源站是香港的 nginx，
       # 正常应该能通；万一被拦，早点失败，别白跑一小时。
       - name: 源站连通性预检

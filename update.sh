@@ -73,9 +73,12 @@ cd "$PUB"
 # 不能写成 `surge ... | tail -6` —— 管道后面再跟一条 echo，$? 就被 echo 覆盖了，
 # 发布失败也会返回 0，云端 workflow 会显示"绿色成功"，是最危险的一类假成功。
 LOGF="$ROOT/.publish.log"
+# < /dev/null 很重要：万一 token 失效，surge 会改去弹交互式登录提示。
+# 在云端没人能输密码，stdin 接 /dev/null 会让它立刻读到 EOF 退出，
+# 而不是一直挂着把整轮任务耗到超时。
 NODE_OPTIONS=--dns-result-order=ipv4first \
 SURGE_TOKEN="$SURGE_TOKEN" \
-"$NODE" "$SURGE" . kaquan-bijia.surge.sh > "$LOGF" 2>&1
+"$NODE" "$SURGE" . kaquan-bijia.surge.sh < /dev/null > "$LOGF" 2>&1
 pub_rc=$?
 if [ "$pub_rc" -ne 0 ]; then
   echo "[$(ts)] 发布失败（退出码 $pub_rc），线上仍是上一版。surge 输出如下："
